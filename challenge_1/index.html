@@ -3,29 +3,46 @@
 <head>
   <title>Tic-Tac-Toe</title>
   <script src="app.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css"></link>
 </head>
 <body>
-  <h1>TIC-TAC-TOE</h1>
-  <table border='1'>
-    <tr class="top">
-      <td id="box0" onClick="handleClick(this.id)">---</td>
-      <td id="box1" onClick="handleClick(this.id)">---</td>
-      <td id="box2" onClick="handleClick(this.id)">---</td>
-    </tr>
-    <tr class="middle">
-      <td id="box3" onClick="handleClick(this.id)">---</td>
-      <td id="box4" onClick="handleClick(this.id)">---</td>
-      <td id="box5" onClick="handleClick(this.id)">---</td>
-    </tr>    
-    <tr class="bottom">
-      <td id="box6" onClick="handleClick(this.id)">---</td>
-      <td id="box7" onClick="handleClick(this.id)">---</td>
-      <td id="box8" onClick="handleClick(this.id)">---</td>
-    </tr>
-  </table>
+  <div class="top">
+  <h1 class="title">tic-tac-toe</h1>
+  <p id="turn">it's x's turn.</p>
+  </div>
+  <div class="board">
 
-  <button onClick="resetBoard()">Reset</button>
 
-  <p id="result"></p>
+
+    <table>
+      <tr class="top">
+        <td id="box0" onClick="handleClick(this.id)"></td>
+        <td id="box1" onClick="handleClick(this.id)"></td>
+        <td id="box2" onClick="handleClick(this.id)"></td>
+      </tr>
+      <tr class="middle">
+        <td id="box3" onClick="handleClick(this.id)"></td>
+        <td id="box4" onClick="handleClick(this.id)"></td>
+        <td id="box5" onClick="handleClick(this.id)"></td>
+      </tr>    
+      <tr class="bottom">
+        <td id="box6" onClick="handleClick(this.id)"></td>
+        <td id="box7" onClick="handleClick(this.id)"></td>
+        <td id="box8" onClick="handleClick(this.id)"></td>
+      </tr>
+    </table>
+
+    
+    <div class="bottom">
+      <button onClick="resetBoard()">RESET</button>
+      <p>score</p>
+      <p id="tallyx">player x.. 0</p>
+      <p id="tallyo">player o.. 0</p>
+      <p id="result"></p>
+    </div>
+    
+
+  </div>
+
 </body>
 </html>
