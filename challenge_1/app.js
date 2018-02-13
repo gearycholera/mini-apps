@@ -8,6 +8,10 @@ var tally = { X: 0, O: 0 };
 var names = ['x', 'o'];
 var xWon = 'xxx';
 var oWon = 'ooo';
+names[0] = prompt('who wants to be x?');
+names[1] = prompt('who wants to be o?');
+
+document.getElementById('turn').innerHTML = 'it\'s ' + names[0] + '\'s turn.';
 
 var resetBoard = function() {
   for (var i = 0; i < 9; i++) {
@@ -121,12 +125,12 @@ var toggleClick = function(id) {
       document.getElementById("turn").innerHTML = winner;
       lastGameTie = false;
       var val = winner.split(' ')[0];
-      if (val === 'x') {
+      if (val === names[0]) {
         prevWinner = 'x';
         tally.X++;
         document.getElementById('tallyx').innerHTML = 'player x.. ' + tally.X;
       } else {
-        prevWinner = 'o';
+        prevWinner = names[1];
         tally.O++;
         document.getElementById('tallyo').innerHTML = 'player o.. ' + tally.O;
       }

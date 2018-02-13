@@ -35,3 +35,11 @@ body {
   color: green;
 }
 
+#score, .title {
+  text-decoration: underline;
+}
+
+#btn {
+  font-size: 14px;
+  padding: 10px;
+}
