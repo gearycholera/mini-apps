@@ -15,6 +15,7 @@ td {
 button {
   padding: 15px;
   text-align: center;
+  width: 100px;
 }
 
 body {
@@ -27,5 +28,10 @@ body {
 
 .top {
   text-align: center;
+}
+
+.winner {
+  font-weight: bold;
+  color: green;
 }
 

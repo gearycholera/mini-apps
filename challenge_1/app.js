@@ -1,102 +1,135 @@
 var bool = true;
-var positions = [0,0,0,0,0,0,0,0,0];
-var xWon = 'XXX';
-var oWon = 'OOO';
+var lastGameTie = true;
+var tieToggle = false;
 var winner = false;
-var prevWinner;
-var tally = {
-  X: 0,
-  O: 0
-};
+var prevWinner = false;
+var pos = [0,0,0,0,0,0,0,0,0];
+var tally = { X: 0, O: 0 };
 var names = ['x', 'o'];
+var xWon = 'xxx';
+var oWon = 'ooo';
 
 var resetBoard = function() {
-  var i = 0;
-  while (i < 9) {
+  for (var i = 0; i < 9; i++) {
     document.getElementById("box"+i).innerHTML = '';
-    i++;
+    document.getElementById("box"+i).classList.remove('winner');
   }
   winner = false;
-  positions = [0,0,0,0,0,0,0,0,0];
-
-  if (prevWinner) {
+  pos = [0,0,0,0,0,0,0,0,0];
+  if (prevWinner && !lastGameTie) {
     prevWinner === 'x' ? bool = true : bool = false;
-  }
-
-  bool ? document.getElementById("turn").innerHTML = "it's " + names[0] + "'s turn." : document.getElementById("turn").innerHTML = "it's " + names[1] + "'s turn."
-  document.getElementById("score").innerHTML = 'score';
+  } else {
+    bool = tieToggle;
+    tieToggle = !tieToggle
+  }  
+  var next;
+  bool ? next = names[0] : next = names[1]
+  document.getElementById("turn").innerHTML = "it's " + next + "'s turn."
+  document.getElementById("btn").innerHTML = 'reset';
 }
 
-var checkRows = function(arr) {
-  var row1 = positions[0] + positions[1] + positions[2];
-  var row2 = positions[3] + positions[4] + positions[5];
-  var row3 = positions[6] + positions[7] + positions[8];
-
-  if (row1 === xWon || row2 === xWon || row3 === xWon) {
+var findWinner = function(one, two, three) {
+  if (one === xWon || two === xWon || three === xWon) {
     winner = names[0] + ' wins';
-  } else if (row1 === oWon || row2 === oWon || row3 === oWon) {
+  } else if (one === oWon || two === oWon || three === oWon) {
     winner = names[1] + ' wins';
   }
 }
 
-var checkColumns = function(arr) {
-  var col1 = positions[0] + positions[3] + positions[6];
-  var col2 = positions[1] + positions[4] + positions[7];
-  var col3 = positions[2] + positions[5] + positions[8];
-
-  if (col1 === xWon || col2 === xWon || col3 === xWon) {
-    winner = names[0] + ' wins';
-  } else if (col1 === oWon || col2 === oWon || col3 === oWon) {
-    winner = names[1] + ' wins';
+var checkRows = function() {
+  var row1 = pos[0] + pos[1] + pos[2];
+  if (row1 === 'xxx' || row1 === 'ooo') { 
+    document.getElementById('box0').classList.add('winner');
+    document.getElementById('box1').classList.add('winner');
+    document.getElementById('box2').classList.add('winner');
   }
+  var row2 = pos[3] + pos[4] + pos[5];
+  if (row2 === 'xxx' || row2 === 'ooo') { 
+    document.getElementById('box3').classList.add('winner');
+    document.getElementById('box4').classList.add('winner');
+    document.getElementById('box5').classList.add('winner');
+  }
+  var row3 = pos[6] + pos[7] + pos[8];
+  if (row3 === 'xxx' || row3 === 'ooo') { 
+    document.getElementById('box6').classList.add('winner');
+    document.getElementById('box7').classList.add('winner');
+    document.getElementById('box8').classList.add('winner');
+  }
+  findWinner(row1, row2, row3);
 }
 
-var checkAcross = function(arr) {
-  var cross1 = positions[0] + positions[4] + positions[8];
-  var cross2 = positions[2] + positions[4] + positions[6];
-
-  if (cross1 === xWon || cross2 === xWon) {
-    winner = names[0] + ' wins';
-  } else if (cross1 === oWon || cross2 === oWon) {
-    winner = names[1] + ' wins';
+var checkColumns = function() {
+  var col1 = pos[0] + pos[3] + pos[6];
+  if (col1 === 'xxx' || col1 === 'ooo') { 
+    document.getElementById('box0').classList.toggle('winner');
+    document.getElementById('box3').classList.toggle('winner');
+    document.getElementById('box6').classList.toggle('winner');
   }
+  var col2 = pos[1] + pos[4] + pos[7];
+  if (col2 === 'xxx' || col2 === 'ooo') { 
+    document.getElementById('box1').classList.toggle('winner');
+    document.getElementById('box4').classList.toggle('winner');
+    document.getElementById('box7').classList.toggle('winner');
+  }
+  var col3 = pos[2] + pos[5] + pos[8];
+  if (col3 === 'xxx' || col3 === 'ooo') { 
+    document.getElementById('box2').classList.toggle('winner');
+    document.getElementById('box5').classList.toggle('winner');
+    document.getElementById('box8').classList.toggle('winner');
+  }
+  findWinner(col1, col2, col3);
 }
 
-var handleClick = function(id) {
-  var mark = document.getElementById(id).innerHTML;
-  if (mark === '' && !winner) {
+var checkAcross = function() {
+  var cross1 = pos[0] + pos[4] + pos[8];
+  if (cross1 === 'xxx' || cross1 === 'ooo') { 
+    document.getElementById('box0').classList.toggle('winner');
+    document.getElementById('box4').classList.toggle('winner');
+    document.getElementById('box8').classList.toggle('winner');
+  }
+  var cross2 = pos[2] + pos[4] + pos[6];
+  if (cross2 === 'xxx' || cross2 === 'ooo') { 
+    document.getElementById('box2').classList.toggle('winner');
+    document.getElementById('box4').classList.toggle('winner');
+    document.getElementById('box6').classList.toggle('winner');
+  }
+  findWinner(cross1, cross2);
+}
+
+var toggleClick = function(id) {
+  var ind = id.split('')[3]
+  if (document.getElementById(id).innerHTML === '' && !winner) {
     if (!bool) {
-      document.getElementById(id).innerHTML = 'O';
-      mark = 'O';
+      document.getElementById(id).innerHTML = 'o';
     } else {
-      document.getElementById(id).innerHTML = 'X';
-      mark = 'X';
+      document.getElementById(id).innerHTML = 'x';
     }
+    
     bool = !bool;
+    pos[ind] === 0 ? pos[ind] = document.getElementById(id).innerHTML : null;
 
-    var ind = id.split('')[3]
-    positions[ind] === 0 ? positions[ind] = mark : null;
+    checkRows();
+    checkColumns();
+    checkAcross();
 
-    checkRows(positions);
-    checkColumns(positions);
-    checkAcross(positions);
-
-    if (!positions.includes(0) && !winner) {
-      winner = "it's a tie. reset and play again"
+    if (!pos.includes(0) && !winner) {
+      winner = "it's a tie. reset and play again."
+      lastGameTie= true;
+      document.getElementById("turn").innerHTML = winner;
+    } else if (winner) {
+      document.getElementById("btn").innerHTML = 'play again';
+      document.getElementById("turn").innerHTML = winner;
+      lastGameTie = false;
+      var val = winner.split(' ')[0];
+      if (val === 'x') {
+        prevWinner = 'x';
+        tally.X++;
+        document.getElementById('tallyx').innerHTML = 'player x.. ' + tally.X;
+      } else {
+        prevWinner = 'o';
+        tally.O++;
+        document.getElementById('tallyo').innerHTML = 'player o.. ' + tally.O;
+      }
     }
-
-    winner ? document.getElementById("score").innerHTML = winner : null;
-
-    if (winner) {
-      var temp = winner.split(' ')[0];
-      temp !== 'a' ? prevWinner = temp : null;
-
-      temp === 'x' ? tally.X++ : null;
-      temp === 'x' ? document.getElementById('tallyx').innerHTML = 'player x.. ' + tally.X : null;
-      temp === 'o' ? tally.O++ : null;
-      temp === 'o' ? document.getElementById('tallyo').innerHTML = 'player o.. ' + tally.O : null;
-    }
-
   }
 }
-
