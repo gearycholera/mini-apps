@@ -5,13 +5,16 @@ var winner = false;
 var prevWinner = false;
 var pos = [0,0,0,0,0,0,0,0,0];
 var tally = { X: 0, O: 0 };
-var names = ['x', 'o'];
+var names = [];
 var xWon = 'xxx';
 var oWon = 'ooo';
 names[0] = prompt('who wants to be x?');
 names[1] = prompt('who wants to be o?');
+if (names[0] === null || names[0] === '') { names[0] = 'x'; }
+if (names[1] === null || names[1] === '') { names[1] = 'o'; }
 
 document.getElementById('turn').innerHTML = 'it\'s ' + names[0] + '\'s turn.';
+document.getElementById('tally').innerHTML = tally.X + '  -- ' + names[0] + '  ||  ' + names[1] + ' --  ' + tally.O;
 
 var resetBoard = function() {
   for (var i = 0; i < 9; i++) {
@@ -128,12 +131,11 @@ var toggleClick = function(id) {
       if (val === names[0]) {
         prevWinner = 'x';
         tally.X++;
-        document.getElementById('tallyx').innerHTML = 'player x.. ' + tally.X;
       } else {
         prevWinner = names[1];
         tally.O++;
-        document.getElementById('tallyo').innerHTML = 'player o.. ' + tally.O;
       }
+      document.getElementById('tally').innerHTML = tally.X + '  -- ' + names[0] + '  ||  ' + names[1] + ' --  ' + tally.O;
     }
   }
 }
