@@ -8,6 +8,7 @@ var tally = {
   X: 0,
   O: 0
 };
+var names = ['x', 'o'];
 
 var resetBoard = function() {
   var i = 0;
@@ -20,12 +21,10 @@ var resetBoard = function() {
 
   if (prevWinner) {
     prevWinner === 'x' ? bool = true : bool = false;
-  } else {
-    bool = false;
   }
 
-  bool ? document.getElementById("turn").innerHTML = "it's x's turn." : document.getElementById("turn").innerHTML = "it's o's turn."
-  document.getElementById("result").innerHTML = '';
+  bool ? document.getElementById("turn").innerHTML = "it's " + names[0] + "'s turn." : document.getElementById("turn").innerHTML = "it's " + names[1] + "'s turn."
+  document.getElementById("score").innerHTML = 'score';
 }
 
 var checkRows = function(arr) {
@@ -34,9 +33,9 @@ var checkRows = function(arr) {
   var row3 = positions[6] + positions[7] + positions[8];
 
   if (row1 === xWon || row2 === xWon || row3 === xWon) {
-    winner = 'x wins';
+    winner = names[0] + ' wins';
   } else if (row1 === oWon || row2 === oWon || row3 === oWon) {
-    winner = 'o wins';
+    winner = names[1] + ' wins';
   }
 }
 
@@ -46,9 +45,9 @@ var checkColumns = function(arr) {
   var col3 = positions[2] + positions[5] + positions[8];
 
   if (col1 === xWon || col2 === xWon || col3 === xWon) {
-    winner = 'x wins';
+    winner = names[0] + ' wins';
   } else if (col1 === oWon || col2 === oWon || col3 === oWon) {
-    winner = 'o wins';
+    winner = names[1] + ' wins';
   }
 }
 
@@ -57,9 +56,9 @@ var checkAcross = function(arr) {
   var cross2 = positions[2] + positions[4] + positions[6];
 
   if (cross1 === xWon || cross2 === xWon) {
-    winner = 'x wins';
+    winner = names[0] + ' wins';
   } else if (cross1 === oWon || cross2 === oWon) {
-    winner = 'o wins';
+    winner = names[1] + ' wins';
   }
 }
 
@@ -86,7 +85,7 @@ var handleClick = function(id) {
       winner = "it's a tie. reset and play again"
     }
 
-    winner ? document.getElementById("result").innerHTML = winner : null;
+    winner ? document.getElementById("score").innerHTML = winner : null;
 
     if (winner) {
       var temp = winner.split(' ')[0];
