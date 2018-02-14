@@ -1,7 +1,8 @@
 var output = [];
+var counter = 1;
 
 var getKeys = function(obj) {
-  var temp = []
+  var temp = ['id']
   for (var key in obj) {
     if (key !== 'children') {
       temp.push(key);
@@ -12,7 +13,7 @@ var getKeys = function(obj) {
 }
 
 var getKids = function(obj) {
-  var temp = [];
+  var temp = [counter];
   for (var key in obj) {
     if (key !== 'children') {
       temp.push(obj[key]);
@@ -23,6 +24,7 @@ var getKids = function(obj) {
     return;
   } else {
    for (var i = 0; i < obj.children.length; i++) {
+     counter++;
      getKids(obj.children[i]);
    }
   }
@@ -34,6 +36,7 @@ var getCSV = function(obj) {
   getKids(obj);
   csv = output.join('\n');
   output = [];
+  counter = 1;
   return csv;
 }
 
