@@ -11,7 +11,6 @@ $(document).ready(function() {
       success: function(result) {
         $("#csv").html("");
         output = JSON.parse(result);
-        //output = output.replace(/\n/g, "<br />");
         $("#csv").html(output);
       },
       error: function() {
