@@ -1,5 +1,30 @@
+table {
+  background-color: CornflowerBlue;
+}
+
+tbody {
+  background-color: white;
+}
+
+body {
+  font-family: courier;
+}
+
 .box {
   width: 100px;
   height: 100px;
-  border-style: solid;
+  border: 1px dashed black;
+  color: white;
+  border-radius: 50%;
 }
+
+.red {
+  background-color: LightCoral;
+  color: LightCoral;
+}
+
+.yellow {
+  background-color: khaki;
+  color: khaki;
+}
+
